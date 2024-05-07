@@ -1,0 +1,30 @@
+{
+    "login": {
+        "title": "Login",
+        "emailInput": "Enter email",
+        "passwordInput": "Enter password",
+        "submitButton": "Login",
+        "registrationButton": "Create account"
+    },
+    "registration": {
+        "title": "Registration",
+        "name": "Enter name",
+        "surname": "Enter surname",
+        "email": "Enter email",
+        "password": "Enter password",
+        "submitButton": "Registration",
+        "loginButton": "Login"
+    },
+    "sidebar": {
+        "feed": "Feed",
+        "myProfile": "My Profile",
+        "friends": "Friends",
+        "stories": "Stories",
+        "channels": "Channels",
+        "music": "Music",
+        "notifications": "Notifications",
+        "messanger": "Messanger",
+        "settings": "Settings",
+        "games": "Games"
+    }
+ }

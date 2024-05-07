@@ -1,13 +1,13 @@
 const Database = require('../db');
 const bcrypt = require('bcrypt');
-const uuid =require('uuid');
+const uuid = require('uuid');
 const mailService = require('./mail-service');  
 const tokenService = require('./token-service');
 const UserDto = require('../dtos/user-dtos');
 const ApiError = require('../exceptions/api-error');
 
 class UserService extends Database {
-    async registration(email, password) {
+    async registration(email, password, name, surname) {
         const res = await this.query('SELECT * FROM user WHERE email = ?', email);
         if (res.length !== 0) {
             throw ApiError.BadRequest(`Пользователь с email ${email} уже существует`)
@@ -15,9 +15,11 @@ class UserService extends Database {
 
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4();
+
+        console.log(uuid);
         await this.query(
-            'INSERT INTO user (email, password, activationLink, isActivated) VALUES (?, ?, ?, false)', 
-            email, hashPassword, activationLink
+            'INSERT INTO user (email, password, activationLink, name, surname, isActivated) VALUES (?, ?, ?, ?, ?, false)', 
+            email, hashPassword, activationLink, name, surname
         );
         const [user] = await this.query('SELECT * FROM user WHERE email = ?', email);
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
@@ -76,6 +78,25 @@ class UserService extends Database {
 
     async getAllUsers() {
         return await this.query('SELECT * FROM user');
+    }
+
+    // Create the @getUser method for recieving a user from the db
+    async getUserByParam(userField, method) {
+        const getUserQuery = `SELECT * FROM user WHERE ${method} = ?`
+        return await this.query(getUserQuery, userField)
+    }
+
+    // Change a user's data by take @method param 
+    // to point out the changing field and the
+    // @newData param, which will update a current user's data
+    async changeUserData(token, method, newData) {
+        // Validate the user by the validating method for accessing they data
+        const user = tokenService.validateAccessToken(token)
+        if (user.err) throw new Error('While changeing user data happened an error');
+        const changeUserMailQuery = `UPDATE user SET ${method} = ? WHERE name = ?`
+        const changeUserMailQueryData = [newData, user.name]
+
+        const res = await this.query(changeUserMailQuery, changeUserMailQueryData)
     }
 }
 

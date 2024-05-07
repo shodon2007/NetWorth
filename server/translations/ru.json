@@ -1,0 +1,30 @@
+{
+    "login": {
+        "title": "Войти",
+        "emailInput": "Введите почту",
+        "passwordInput": "Введите пароль",
+        "submitButton": "Войти",
+        "registrationButton": "Создать аккаунт"
+    },
+    "registration": {
+        "title": "Регистрация",
+        "name": "Введите имя",
+        "surname": "Введите фамилию",
+        "email": "Введите почту",
+        "password": "Введите пароль",
+        "submitButton": "Регистрация",
+        "loginButton": "Уже есть аккаунт? Войти"
+    },
+    "sidebar": {
+        "feed": "Домой",
+        "myProfile": "Мой профиль",
+        "friends": "Друзья",
+        "stories": "Сторис",
+        "channels": "Каналы",
+        "music": "Музыка",
+        "notifications": "Уведомление",
+        "messanger": "Мессенджер",
+        "settings": "Настройки",
+        "games": "Игры"
+    }
+}
